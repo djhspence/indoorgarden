@@ -16,7 +16,7 @@ float h2oSensorReading3 = 0;
 float h2oSensorReading4 = 0;
 
 // unsigned long cycleLength = 3600000;  // 1 hour between checks
-unsigned long cycleLength = 10000;  // 10 secs between checks
+unsigned long cycleLength = 10000; // 10 secs between checks
 unsigned long cycleCount = 0;
 
 unsigned long plant1Millis = 0;
@@ -24,7 +24,8 @@ unsigned long plant2Millis = 0;
 unsigned long plant3Millis = 0;
 unsigned long plant4Millis = 0;
 
-void setup() {
+void setup()
+{
     Serial.begin(9600);
     pinMode(relay1, OUTPUT);
     pinMode(relay2, OUTPUT);
@@ -42,42 +43,48 @@ void setup() {
     digitalWrite(relay4, HIGH);
     delay(500);
 }
-int h2oSensor;
+// int h2oSensor;
 
-plantCheck(h20Sensor) {
+// plantCheck(h2oSensor) {
+//     unsigned long currentMillis = millis();
+//     if ((currentMillis - plant1Millis) >= cycleLength) {
+//         int h2oSensorReading = analogRead(h2oSensor1);
+//         Serial.print("MOISTURE LEVEL 1:");
+//         Serial.println(h2oSensorReading1);
+//         if (h2oSensorReading1 > 550) {
+//             while (millis() <=
+//                    (currentMillis + 20000)) {  // turn on the water for 20 secs
+//                 digitalWrite(relay1, LOW);
+//             }
+//             digitalWrite(relay1, HIGH);
+//         } else {
+//             digitalWrite(relay1, HIGH);
+//         }
+
+//         Serial.println();
+//         plant1Millis = currentMillis;
+//     }
+// }
+
+void plantCheck1()
+{
     unsigned long currentMillis = millis();
-    if ((currentMillis - plant1Millis) >= cycleLength) {
-        int h2oSensorReading = analogRead(h2oSensor1);
-        Serial.print("MOISTURE LEVEL 1:");
-        Serial.println(h2oSensorReading1);
-        if (h2oSensorReading1 > 550) {
-            while (millis() <=
-                   (currentMillis + 20000)) {  // turn on the water for 20 secs
-                digitalWrite(relay1, LOW);
-            }
-            digitalWrite(relay1, HIGH);
-        } else {
-            digitalWrite(relay1, HIGH);
-        }
-
-        Serial.println();
-        plant1Millis = currentMillis;
-    }
-}
-
-void plantCheck1() {
-    unsigned long currentMillis = millis();
-    if ((currentMillis - plant1Millis) >= cycleLength) {
+    if ((currentMillis - plant1Millis) >= cycleLength)
+    {
         h2oSensorReading1 = analogRead(h2oSensor1);
         Serial.print("MOISTURE LEVEL 1:");
         Serial.println(h2oSensorReading1);
-        if (h2oSensorReading1 > 550) {
+        if (h2oSensorReading1 > 550)
+        {
             while (millis() <=
-                   (currentMillis + 20000)) {  // turn on the water for 20 secs
+                   (currentMillis + 20000))
+            { // turn on the water for 20 secs
                 digitalWrite(relay1, LOW);
             }
             digitalWrite(relay1, HIGH);
-        } else {
+        }
+        else
+        {
             digitalWrite(relay1, HIGH);
         }
 
@@ -86,19 +93,25 @@ void plantCheck1() {
     }
 }
 
-void plantCheck2() {
+void plantCheck2()
+{
     unsigned long currentMillis = millis();
-    if ((currentMillis - plant2Millis) >= cycleLength) {
+    if ((currentMillis - plant2Millis) >= cycleLength)
+    {
         h2oSensorReading2 = analogRead(h2oSensor2);
         Serial.print("MOISTURE LEVEL 2:");
         Serial.println(h2oSensorReading2);
-        if (h2oSensorReading2 > 550) {
+        if (h2oSensorReading2 > 550)
+        {
             while (millis() <=
-                   (currentMillis + 20000)) {  // turn on the water for 20 secs
+                   (currentMillis + 20000))
+            { // turn on the water for 20 secs
                 digitalWrite(relay2, LOW);
             }
             digitalWrite(relay2, HIGH);
-        } else {
+        }
+        else
+        {
             digitalWrite(relay2, HIGH);
         }
         Serial.println();
@@ -106,19 +119,25 @@ void plantCheck2() {
     }
 }
 
-void plantCheck3() {
+void plantCheck3()
+{
     unsigned long currentMillis = millis();
-    if ((currentMillis - plant3Millis) >= cycleLength) {
+    if ((currentMillis - plant3Millis) >= cycleLength)
+    {
         h2oSensorReading3 = analogRead(h2oSensor3);
         Serial.print("MOISTURE LEVEL 3:");
         Serial.println(h2oSensorReading3);
-        if (h2oSensorReading3 > 550) {
+        if (h2oSensorReading3 > 550)
+        {
             while (millis() <=
-                   (currentMillis + 20000)) {  // turn on the water for 20 secs
+                   (currentMillis + 20000))
+            { // turn on the water for 20 secs
                 digitalWrite(relay3, LOW);
             }
             digitalWrite(relay3, HIGH);
-        } else {
+        }
+        else
+        {
             digitalWrite(relay3, HIGH);
         }
         Serial.println();
@@ -126,19 +145,25 @@ void plantCheck3() {
     }
 }
 
-void plantCheck4() {
+void plantCheck4()
+{
     unsigned long currentMillis = millis();
-    if ((currentMillis - plant4Millis) >= cycleLength) {
+    if ((currentMillis - plant4Millis) >= cycleLength)
+    {
         h2oSensorReading4 = analogRead(h2oSensor4);
         Serial.print("MOISTURE LEVEL 4:");
         Serial.println(h2oSensorReading4);
-        if (h2oSensorReading4 > 550) {
+        if (h2oSensorReading4 > 550)
+        {
             while (millis() <=
-                   (currentMillis + 20000)) {  // turn on the water for 20 secs
+                   (currentMillis + 20000))
+            { // turn on the water for 20 secs
                 digitalWrite(relay4, LOW);
             }
             digitalWrite(relay4, HIGH);
-        } else {
+        }
+        else
+        {
             digitalWrite(relay4, HIGH);
         }
         Serial.println();
@@ -146,7 +171,8 @@ void plantCheck4() {
     }
 }
 
-void loop() {
+void loop()
+{
     plantCheck1();
     plantCheck2();
     plantCheck3();
