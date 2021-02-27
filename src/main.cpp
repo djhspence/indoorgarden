@@ -1,5 +1,11 @@
 #include <Arduino.h>
 
+int waterDuration = 20000; // water for X seconds
+int sens1thresh = 550;
+int sens2thresh = 550;
+int sens3thresh = 550;
+int sens4thresh = 550;
+
 int relay1 = 2;
 int relay2 = 3;
 int relay3 = 4;
@@ -74,10 +80,10 @@ void plantCheck1()
         h2oSensorReading1 = analogRead(h2oSensor1);
         Serial.print("MOISTURE LEVEL 1:");
         Serial.println(h2oSensorReading1);
-        if (h2oSensorReading1 > 550)
+        if (h2oSensorReading1 > sens1thresh)
         {
             while (millis() <=
-                   (currentMillis + 20000))
+                   (currentMillis + waterDuration))
             { // turn on the water for 20 secs
                 digitalWrite(relay1, LOW);
             }
@@ -101,10 +107,10 @@ void plantCheck2()
         h2oSensorReading2 = analogRead(h2oSensor2);
         Serial.print("MOISTURE LEVEL 2:");
         Serial.println(h2oSensorReading2);
-        if (h2oSensorReading2 > 550)
+        if (h2oSensorReading2 > sens2thresh)
         {
             while (millis() <=
-                   (currentMillis + 20000))
+                   (currentMillis + waterDuration))
             { // turn on the water for 20 secs
                 digitalWrite(relay2, LOW);
             }
@@ -127,10 +133,10 @@ void plantCheck3()
         h2oSensorReading3 = analogRead(h2oSensor3);
         Serial.print("MOISTURE LEVEL 3:");
         Serial.println(h2oSensorReading3);
-        if (h2oSensorReading3 > 550)
+        if (h2oSensorReading3 > sens3thresh)
         {
             while (millis() <=
-                   (currentMillis + 20000))
+                   (currentMillis + waterDuration))
             { // turn on the water for 20 secs
                 digitalWrite(relay3, LOW);
             }
@@ -153,10 +159,10 @@ void plantCheck4()
         h2oSensorReading4 = analogRead(h2oSensor4);
         Serial.print("MOISTURE LEVEL 4:");
         Serial.println(h2oSensorReading4);
-        if (h2oSensorReading4 > 550)
+        if (h2oSensorReading4 > sens4thresh)
         {
             while (millis() <=
-                   (currentMillis + 20000))
+                   (currentMillis + waterDuration))
             { // turn on the water for 20 secs
                 digitalWrite(relay4, LOW);
             }
