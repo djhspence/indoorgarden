@@ -1,10 +1,14 @@
 #include <Arduino.h>
 
-int waterDuration = 20000;  // water for X seconds
-int sens1thresh = 550;
-int sens2thresh = 550;
-int sens3thresh = 550;
-int sens4thresh = 550;
+// unsigned long cycleLength = 3600000;  // 1 hour between checks
+unsigned long cycleLength = 10000;  // 10 secs between checks
+int waterDuration = 20000;          // water for X seconds
+
+int commonThresh = 550;
+int sens1thresh = commonThresh;
+int sens2thresh = commonThresh;
+int sens3thresh = commonThresh;
+int sens4thresh = commonThresh;
 
 int relay1 = 2;
 int relay2 = 3;
@@ -21,8 +25,6 @@ float h2oSensorReading2 = 0;
 float h2oSensorReading3 = 0;
 float h2oSensorReading4 = 0;
 
-// unsigned long cycleLength = 3600000;  // 1 hour between checks
-unsigned long cycleLength = 10000;  // 10 secs between checks
 unsigned long cycleCount = 0;
 
 unsigned long plant1Millis = 0;
