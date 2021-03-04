@@ -1,14 +1,22 @@
 #include <Arduino.h>
 
-// unsigned long cycleLength = 3600000;  // 1 hour between checks
-unsigned long cycleLength = 10000; // 10 secs between checks
-int waterDuration = 20000;         // water for X seconds
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 
-int commonThresh = 550;
+unsigned long cycleLength = 3600000;  // 1 hour between checks
+//unsigned long cycleLength = 5000; // 5 secs between checks
+
+int waterDuration = 5000; // water for X seconds
+
+int commonThresh = 480;
+
 int sens1thresh = commonThresh;
 int sens2thresh = commonThresh;
 int sens3thresh = commonThresh;
 int sens4thresh = commonThresh;
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 
 int relay1 = 2;
 int relay2 = 3;
@@ -80,7 +88,7 @@ void plantCheck1()
     if ((currentMillis - plant1Millis) >= cycleLength)
     {
         h2oSensorReading1 = analogRead(h2oSensor1);
-        Serial.print("MOISTURE LEVEL 1:");
+        Serial.print("MOISTURE LEVEL 1 (BLACK):");
         Serial.println(h2oSensorReading1);
         if (h2oSensorReading1 > sens1thresh)
         {
@@ -107,7 +115,7 @@ void plantCheck2()
     if ((currentMillis - plant2Millis) >= cycleLength)
     {
         h2oSensorReading2 = analogRead(h2oSensor2);
-        Serial.print("MOISTURE LEVEL 2:");
+        Serial.print("MOISTURE LEVEL 2 (GREEN):");
         Serial.println(h2oSensorReading2);
         if (h2oSensorReading2 > sens2thresh)
         {
@@ -133,7 +141,7 @@ void plantCheck3()
     if ((currentMillis - plant3Millis) >= cycleLength)
     {
         h2oSensorReading3 = analogRead(h2oSensor3);
-        Serial.print("MOISTURE LEVEL 3:");
+        Serial.print("MOISTURE LEVEL 3 (YELLOW):");
         Serial.println(h2oSensorReading3);
         if (h2oSensorReading3 > sens3thresh)
         {
@@ -159,7 +167,7 @@ void plantCheck4()
     if ((currentMillis - plant4Millis) >= cycleLength)
     {
         h2oSensorReading4 = analogRead(h2oSensor4);
-        Serial.print("MOISTURE LEVEL 4:");
+        Serial.print("MOISTURE LEVEL 4 (RED):");
         Serial.println(h2oSensorReading4);
         if (h2oSensorReading4 > sens4thresh)
         {
@@ -186,6 +194,7 @@ void loop()
     plantCheck3();
     plantCheck4();
     Serial.println("###########");
+    delay(5000);
 }
 
 //////////////////////////
