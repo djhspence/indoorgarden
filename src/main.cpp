@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 
-unsigned long cycleLength = 3600000;  // 1 hour between checks
+unsigned long cycleLength = 3600000; // 1 hour between checks
 //unsigned long cycleLength = 5000; // 5 secs between checks
 
 int waterDuration = 5000; // water for X seconds
@@ -69,7 +69,8 @@ void setup()
 //         Serial.println(h2oSensorReading1);
 //         if (h2oSensorReading1 > 550) {
 //             while (millis() <=
-//                    (currentMillis + 20000)) {  // turn on the water for 20 secs
+//                    (currentMillis + 20000)) {  // turn on the water for 20
+//                    secs
 //                 digitalWrite(relay1, LOW);
 //             }
 //             digitalWrite(relay1, HIGH);
@@ -93,7 +94,8 @@ void plantCheck1()
         if (h2oSensorReading1 > sens1thresh)
         {
             while (millis() <=
-                   (currentMillis + waterDuration))
+                   (currentMillis +
+                    waterDuration))
             { // turn on the water for 20 secs
                 digitalWrite(relay1, LOW);
             }
@@ -120,7 +122,8 @@ void plantCheck2()
         if (h2oSensorReading2 > sens2thresh)
         {
             while (millis() <=
-                   (currentMillis + waterDuration))
+                   (currentMillis +
+                    waterDuration))
             { // turn on the water for 20 secs
                 digitalWrite(relay2, LOW);
             }
@@ -146,7 +149,8 @@ void plantCheck3()
         if (h2oSensorReading3 > sens3thresh)
         {
             while (millis() <=
-                   (currentMillis + waterDuration))
+                   (currentMillis +
+                    waterDuration))
             { // turn on the water for 20 secs
                 digitalWrite(relay3, LOW);
             }
@@ -172,7 +176,8 @@ void plantCheck4()
         if (h2oSensorReading4 > sens4thresh)
         {
             while (millis() <=
-                   (currentMillis + waterDuration))
+                   (currentMillis +
+                    waterDuration))
             { // turn on the water for 20 secs
                 digitalWrite(relay4, LOW);
             }
