@@ -86,11 +86,12 @@ void setup()
 void plantCheck1()
 {
     unsigned long currentMillis = millis();
+    h2oSensorReading1 = analogRead(h2oSensor1);
+    Serial.print("MOISTURE LEVEL 1 (BLACK):");
+    Serial.println(h2oSensorReading1);
     if ((currentMillis - plant1Millis) >= cycleLength)
     {
-        h2oSensorReading1 = analogRead(h2oSensor1);
-        Serial.print("MOISTURE LEVEL 1 (BLACK):");
-        Serial.println(h2oSensorReading1);
+
         if (h2oSensorReading1 > sens1thresh)
         {
             while (millis() <=
@@ -114,11 +115,12 @@ void plantCheck1()
 void plantCheck2()
 {
     unsigned long currentMillis = millis();
+    h2oSensorReading2 = analogRead(h2oSensor2);
+    Serial.print("MOISTURE LEVEL 2 (GREEN):");
+    Serial.println(h2oSensorReading2);
     if ((currentMillis - plant2Millis) >= cycleLength)
     {
-        h2oSensorReading2 = analogRead(h2oSensor2);
-        Serial.print("MOISTURE LEVEL 2 (GREEN):");
-        Serial.println(h2oSensorReading2);
+
         if (h2oSensorReading2 > sens2thresh)
         {
             while (millis() <=
@@ -141,11 +143,12 @@ void plantCheck2()
 void plantCheck3()
 {
     unsigned long currentMillis = millis();
+    h2oSensorReading3 = analogRead(h2oSensor3);
+    Serial.print("MOISTURE LEVEL 3 (YELLOW):");
+    Serial.println(h2oSensorReading3);
     if ((currentMillis - plant3Millis) >= cycleLength)
     {
-        h2oSensorReading3 = analogRead(h2oSensor3);
-        Serial.print("MOISTURE LEVEL 3 (YELLOW):");
-        Serial.println(h2oSensorReading3);
+
         if (h2oSensorReading3 > sens3thresh)
         {
             while (millis() <=
@@ -168,11 +171,12 @@ void plantCheck3()
 void plantCheck4()
 {
     unsigned long currentMillis = millis();
+    h2oSensorReading4 = analogRead(h2oSensor4);
+    Serial.print("MOISTURE LEVEL 4 (RED):");
+    Serial.println(h2oSensorReading4);
     if ((currentMillis - plant4Millis) >= cycleLength)
     {
-        h2oSensorReading4 = analogRead(h2oSensor4);
-        Serial.print("MOISTURE LEVEL 4 (RED):");
-        Serial.println(h2oSensorReading4);
+
         if (h2oSensorReading4 > sens4thresh)
         {
             while (millis() <=
