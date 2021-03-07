@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 
+unsigned long checkDelay =5000;
 unsigned long cycleLength = 3600000; // 1 hour between checks
 //unsigned long cycleLength = 5000; // 5 secs between checks
 
@@ -34,6 +35,7 @@ float h2oSensorReading3 = 0;
 float h2oSensorReading4 = 0;
 
 unsigned long cycleCount = 0;
+unsigned long lastCheck = 0; // set with millis() at the end of each loop
 
 unsigned long plant1Millis = 0;
 unsigned long plant2Millis = 0;
@@ -198,12 +200,16 @@ void plantCheck4()
 
 void loop()
 {
+    //non-blocking delay loop
+    if ((millis()-lastCheck)>=checkDelay){ 
     plantCheck1();
     plantCheck2();
     plantCheck3();
     plantCheck4();
     Serial.println("###########");
-    delay(5000);
+    lastCheck = millis();
+    }
+    // end of loop
 }
 
 //////////////////////////
