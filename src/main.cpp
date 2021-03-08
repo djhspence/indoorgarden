@@ -12,7 +12,18 @@ int waterDuration = 5000; // water for X seconds
 int commonThresh = 540;
 int percentThresh = 50;
 
+struct MoistureSensor {
+    int relay;
+    int sensor;
+    int airValue;
+    int waterValue;
+    int threshold;
+    int liveRead;
+} black, green, yellow, red;
+
+
 // Black
+
 int sens1thresh = commonThresh;
 int relay1 = 2;
 int h2oSensor1 = A1;
@@ -74,6 +85,12 @@ void setup()
     digitalWrite(relay3, HIGH);
     digitalWrite(relay4, HIGH);
     delay(500);
+
+// set up structs for each plant
+    black= {2,1,572,282};
+    green = {3, 2, 575, 273};
+    yellow = {4, 3, 554, 266};
+    red = {5, 4, 573, 269};
 }
 // int h2oSensor;
 
@@ -99,17 +116,17 @@ void setup()
 //     }
 // }
 
-int convertPercent (int value) {
+int convertPercent (int value, int min, int max) {
     int moisturePercent = 0;
-    moisturePercent = map(value, 700, 500, 0, 100);
+    moisturePercent = map(value, min, max, 0, 100);
     return moisturePercent;
 }
 
-void plantCheck1()
+void plantCheck1(plant)
 {
     unsigned long currentMillis = millis();
     h2oSensorReading1 = analogRead(h2oSensor1);
-    int readingPercent = convertPercent(h2oSensorReading1);
+    int readingPercent = convertPercent(MoistureSensor.liveRead, .airValue, .waterValue);
     Serial.print("MOISTURE LEVEL 1 (BLACK):");
     Serial.println(readingPercent);
     if ((currentMillis - plant1Millis) >= cycleLength)
