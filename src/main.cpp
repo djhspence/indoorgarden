@@ -10,26 +10,35 @@ unsigned long cycleLength = 3600000; // 1 hour between checks
 int waterDuration = 5000; // water for X seconds
 
 int commonThresh = 540;
+int percentThresh = 50;
 
 // Black
 int sens1thresh = commonThresh;
 int relay1 = 2;
 int h2oSensor1 = A1;
+int airValue1 = 572;
+int waterValue1 = 282;
 
 // Green
 int sens2thresh = commonThresh;
 int relay2 = 3;
 int h2oSensor2 = A2;
+int airValue2 = 575;
+int waterValue2 = 273;
 
 // Yellow
 int sens3thresh = commonThresh;
 int relay3 = 4;
 int h2oSensor3 = A3;
+int airValue3 = 554;
+int waterValue3 = 266;
 
 // Red
 int sens4thresh = 580;
 int relay4 = 5;
 int h2oSensor4 = A4;
+int airValue4 = 573;
+int waterValue4 = 269;
 
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
@@ -90,16 +99,23 @@ void setup()
 //     }
 // }
 
+int convertPercent (int value) {
+    int moisturePercent = 0;
+    moisturePercent = map(value, 700, 500, 0, 100);
+    return moisturePercent;
+}
+
 void plantCheck1()
 {
     unsigned long currentMillis = millis();
     h2oSensorReading1 = analogRead(h2oSensor1);
+    int readingPercent = convertPercent(h2oSensorReading1);
     Serial.print("MOISTURE LEVEL 1 (BLACK):");
-    Serial.println(h2oSensorReading1);
+    Serial.println(readingPercent);
     if ((currentMillis - plant1Millis) >= cycleLength)
     {
 
-        if (h2oSensorReading1 > sens1thresh)
+        if (readingPercent < percentThresh)
         {
             while (millis() <=
                    (currentMillis +
@@ -217,21 +233,3 @@ void loop()
     }
     // end of loop
 }
-
-//////////////////////////
-// Simple code for Measuring Voltage from
-// Capacitive soil moisture sensor
-
-// int soil_pin = A0; // AOUT pin on sensor
-
-// void setup() {
-//   Serial.begin(9600); // serial port setup
-//   analogReference(EXTERNAL); // set the analog reference to 3.3V
-// }
-
-// void loop() {
-//   Serial.print("Soil Moisture Sensor Voltage: ");
-//   Serial.print((float(analogRead(soil_pin))/1023.0)*3.3); // read sensor
-//   Serial.println(" V");
-//   delay(100); // slight delay between readings
-// }
