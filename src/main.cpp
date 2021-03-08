@@ -3,31 +3,36 @@
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 
-unsigned long checkDelay =5000;
+unsigned long checkDelay = 5000;
 unsigned long cycleLength = 3600000; // 1 hour between checks
 //unsigned long cycleLength = 5000; // 5 secs between checks
 
 int waterDuration = 5000; // water for X seconds
 
-int commonThresh = 480;
+int commonThresh = 540;
 
+// Black
 int sens1thresh = commonThresh;
-int sens2thresh = commonThresh;
-int sens3thresh = commonThresh;
-int sens4thresh = commonThresh;
-
-///////////////////////////////////////////////
-///////////////////////////////////////////////
-
 int relay1 = 2;
-int relay2 = 3;
-int relay3 = 4;
-int relay4 = 5;
+int h2oSensor1 = A1;
 
-int h2oSensor1 = A0;
-int h2oSensor2 = A1;
-int h2oSensor3 = A2;
-int h2oSensor4 = A3;
+// Green
+int sens2thresh = commonThresh;
+int relay2 = 3;
+int h2oSensor2 = A2;
+
+// Yellow
+int sens3thresh = commonThresh;
+int relay3 = 4;
+int h2oSensor3 = A3;
+
+// Red
+int sens4thresh = 580;
+int relay4 = 5;
+int h2oSensor4 = A4;
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 
 float h2oSensorReading1 = 0;
 float h2oSensorReading2 = 0;
@@ -201,13 +206,14 @@ void plantCheck4()
 void loop()
 {
     //non-blocking delay loop
-    if ((millis()-lastCheck)>=checkDelay){ 
-    plantCheck1();
-    plantCheck2();
-    plantCheck3();
-    plantCheck4();
-    Serial.println("###########");
-    lastCheck = millis();
+    if (((millis() - lastCheck) >= checkDelay) || (lastCheck = 0)) // if delay has passed OR this is the first pass through the loop
+    {
+        plantCheck1();
+        plantCheck2();
+        plantCheck3();
+        plantCheck4();
+        Serial.println("###########");
+        lastCheck = millis();
     }
     // end of loop
 }
