@@ -2,7 +2,7 @@
 
 unsigned long checkDelay = 5000;
 unsigned long cycleLength = 3600000; // 1 hour between checks
-// unsigned long cycleLength = 5000; // 5 secs between checks
+// unsigned long cycleLength = 10000; // 5 secs between checks
 
 int waterDuration = 5000; // water for X seconds
 
@@ -16,16 +16,18 @@ struct Plant
     int sensor;
     int airValue;
     int waterValue;
-    int threshold;
     int liveRead;
-}; /*black, green, yellow, red;*/
+    unsigned long plantMillis;
+};
 
 Plant black = {
     "Black", //name
     2,       // relay pin
     1,       // sensor pin
     572,     // air reading
-    282      // water reading
+    282,     // water reading
+    0,       // live reading
+    0        // plant milli counter
 };
 
 Plant green = {
@@ -33,40 +35,35 @@ Plant green = {
     3,       // relay pin
     2,       // sensor pin
     575,     // air reading
-    273      // water reading
-};
+    273,     // water reading
+    0,       // live reading
+    0};      // plant milli counter
 
 Plant yellow = {
     "Yellow", //name
     4,        // relay pin
     3,        // sensor pin
     554,      // air reading
-    266       // water reading
-};
+    266,      // water reading
+    0,        // live reading
+    0};       // plant milli counter
 
 Plant red = {
     "Red", //name
     5,     // relay pin
     4,     // sensor pin
     573,   // air reading
-    269    // water reading
-};
+    269,   // water reading
+    0,     // live reading
+    0};    // plant milli counter
 
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
-
-float h2oSensorReading1 = 0;
-float h2oSensorReading2 = 0;
-float h2oSensorReading3 = 0;
-float h2oSensorReading4 = 0;
 
 unsigned long cycleCount = 0;
 unsigned long lastCheck = 0; // set with millis() at the end of each loop
 
-unsigned long plant1Millis = 0;
-unsigned long plant2Millis = 0;
-unsigned long plant3Millis = 0;
-unsigned long plant4Millis = 0;
+unsigned long plantMillis = 0;
 
 void setup()
 {
@@ -93,7 +90,7 @@ void setup()
 int convertPercent(int value, int min, int max)
 {
     int moisturePercent = 0;
-    moisturePercent = map(value, max, min, 0, 100);
+    moisturePercent = map(value, min, max, 0, 100);
     return moisturePercent;
 }
 
@@ -110,25 +107,28 @@ void plantCheck(Plant plant)
     Serial.print(readingPercent);
     Serial.print("%, raw: ");
     Serial.println(plant.liveRead);
-    if ((currentMillis - plant1Millis) >= cycleLength)
+    if (((currentMillis - plant.plantMillis) >= cycleLength) || lastCheck == 0)
     {
+
         if (readingPercent < percentThresh)
         {
-            while (millis() <=
-                   (currentMillis +
-                    waterDuration))
-            { // turn on the water for 20 secs
+            Serial.print("Water on relay ");
+            Serial.println(plant.relay);
+            while (millis() <= (currentMillis + waterDuration))
+            { // turn on the water
                 digitalWrite(plant.relay, LOW);
             }
             digitalWrite(plant.relay, HIGH);
+            Serial.println("water off");
         }
         else
         {
             digitalWrite(plant.relay, HIGH);
+            Serial.println("do nothing");
         }
 
         Serial.println();
-        plant1Millis = currentMillis;
+        plant.plantMillis = currentMillis;
     }
 }
 
