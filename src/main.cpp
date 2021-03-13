@@ -2,7 +2,7 @@
 
 unsigned long checkDelay = 5000; // time between main loops, non-blocking
 //unsigned long cycleLength = 3600000; // 1 hour before next potential watering event
-unsigned long cycleLength = 5000; // 5 secs between checks
+unsigned long cycleLength = 30000; // 30 secs between checks
 
 int waterDuration = 2000; // water for X seconds
 
@@ -116,33 +116,45 @@ void plantCheck(Plant plant)
                 //Serial.println("p");
                 Serial.print("Water on relay ");
                 Serial.println(plant.relay);
-                digitalWrite(plant.relay, LOW);
+                digitalWrite(plant.relay, HIGH);
             }
-            digitalWrite(plant.relay, HIGH);
+            digitalWrite(plant.relay, LOW);
             Serial.println("water off");
         }
-        else
-        {
-            digitalWrite(plant.relay, HIGH);
-            Serial.println("do nothing");
-        }
+        //else
+        //{
+        digitalWrite(plant.relay, LOW);
+        //Serial.println("do nothing");
+        //}
 
         Serial.println();
         plant.plantMillis = currentMillis;
+        Serial.print("Black relay state: ");
+        Serial.println(digitalRead(black.relay));
+        Serial.print("Green relay state: ");
+        Serial.println(digitalRead(green.relay));
+        Serial.print("Yellow relay state: ");
+        Serial.println(digitalRead(yellow.relay));
+        Serial.print("Red relay state: ");
+        Serial.println(digitalRead(red.relay));
     }
 }
 
 void loop()
 {
+
     // non-blocking delay loop
     if (((millis() - lastCheck) >= checkDelay) ||
         (lastCheck == 0)) // if delay has passed OR this is the first pass
     {                     // through the loop
         plantCheck(black);
-        //plantCheck(green);
-        //plantCheck(yellow);
-        //plantCheck(red);
-
+        plantCheck(green);
+        plantCheck(yellow);
+        plantCheck(red);
+        digitalWrite(black.relay, HIGH);
+        digitalWrite(green.relay, HIGH);
+        digitalWrite(yellow.relay, HIGH);
+        digitalWrite(red.relay, HIGH);
         Serial.println("###########");
         lastCheck = millis();
     }
