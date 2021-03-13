@@ -1,13 +1,12 @@
 #include <Arduino.h>
 
-unsigned long checkDelay = 5000;
-unsigned long cycleLength = 3600000; // 1 hour between checks
-// unsigned long cycleLength = 10000; // 5 secs between checks
+unsigned long checkDelay = 5000; // time between main loops, non-blocking
+//unsigned long cycleLength = 3600000; // 1 hour before next potential watering event
+unsigned long cycleLength = 5000; // 5 secs between checks
 
-int waterDuration = 5000; // water for X seconds
+int waterDuration = 2000; // water for X seconds
 
-int commonThresh = 540;
-int percentThresh = 50;
+int percentThresh = 50; // % under which waterig is triggered
 
 struct Plant
 {
@@ -60,10 +59,9 @@ Plant red = {
 ///////////////////////////////////////////////
 ///////////////////////////////////////////////
 
-unsigned long cycleCount = 0;
 unsigned long lastCheck = 0; // set with millis() at the end of each loop
 
-unsigned long plantMillis = 0;
+//unsigned long plantMillis = 0;
 
 void setup()
 {
@@ -80,10 +78,10 @@ void setup()
     pinMode(yellow.sensor, INPUT);
     pinMode(red.sensor, INPUT);
 
-    digitalWrite(black.relay, HIGH);
-    digitalWrite(green.relay, HIGH);
-    digitalWrite(yellow.relay, HIGH);
-    digitalWrite(red.relay, HIGH);
+    // digitalWrite(black.relay, HIGH);
+    // digitalWrite(green.relay, HIGH);
+    // digitalWrite(yellow.relay, HIGH);
+    // digitalWrite(red.relay, HIGH);
     delay(500);
 }
 
@@ -112,10 +110,12 @@ void plantCheck(Plant plant)
 
         if (readingPercent < percentThresh)
         {
-            Serial.print("Water on relay ");
-            Serial.println(plant.relay);
-            while (millis() <= (currentMillis + waterDuration))
+
+            if (millis() <= (currentMillis + waterDuration))
             { // turn on the water
+                //Serial.println("p");
+                Serial.print("Water on relay ");
+                Serial.println(plant.relay);
                 digitalWrite(plant.relay, LOW);
             }
             digitalWrite(plant.relay, HIGH);
@@ -139,9 +139,9 @@ void loop()
         (lastCheck == 0)) // if delay has passed OR this is the first pass
     {                     // through the loop
         plantCheck(black);
-        plantCheck(green);
-        plantCheck(yellow);
-        plantCheck(red);
+        //plantCheck(green);
+        //plantCheck(yellow);
+        //plantCheck(red);
 
         Serial.println("###########");
         lastCheck = millis();
