@@ -5,7 +5,7 @@ const unsigned long checkDelay = 1800000; // 1/2 hour before next potential
 
 const int waterDuration = 5000; // water for X seconds
 
-const int percentThresh = 50; // % under which waterig is triggered
+const int percentThresh = 65; // % under which waterig is triggered
 
 struct Plant
 {
